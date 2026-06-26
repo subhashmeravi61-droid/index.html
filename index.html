@@ -6,23 +6,22 @@
     <title>Kawardha Cafe | VVIP</title>
     <style>
         * { box-sizing: border-box; touch-action: manipulation; }
-        body { background: #000; color: #fff; font-family: sans-serif; padding: 25px; margin: 0; }
-        .header { text-align: center; margin-bottom: 30px; }
-        .crown { font-size: 80px; display: block; margin-bottom: 10px; }
-        .logo-circle { width: 220px; height: 220px; border: 6px solid #bf00ff; border-radius: 50%; margin: 20px auto; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 30px #bf00ff; }
-        .logo-text { color: #bf00ff; font-size: 32px; font-weight: bold; text-align: center; line-height: 1.2; }
-        .input-box { width: 100%; padding: 22px; margin: 15px 0; border: 3px solid #bf00ff; background: #111; color: #fff; border-radius: 20px; font-size: 20px; }
-        .card { background: #111; padding: 25px; border-radius: 25px; border: 2px solid #bf00ff; margin-bottom: 25px; }
-        .card b { font-size: 24px; }
-        .btn-qty { width: 70px; height: 70px; border-radius: 50%; border: none; color: white; font-weight: bold; font-size: 30px; }
-        .btn-send { width: 100%; padding: 30px; background: #bf00ff; border: none; border-radius: 20px; font-weight: bold; font-size: 28px; color: white; margin-top: 30px; }
+        body { background: #000; color: #fff; font-family: sans-serif; padding: 15px; margin: 0; }
+        .header { text-align: center; margin-bottom: 20px; }
+        .crown { font-size: 50px; display: block; margin-bottom: 5px; }
+        .logo-circle { width: 140px; height: 140px; border: 3px solid #bf00ff; border-radius: 50%; margin: 5px auto; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 15px #bf00ff; }
+        .logo-text { color: #bf00ff; font-size: 20px; font-weight: bold; text-align: center; line-height: 1.1; }
+        .input-box { width: 100%; padding: 12px; margin: 8px 0; border: 2px solid #bf00ff; background: #111; color: #fff; border-radius: 12px; font-size: 16px; }
+        .card { background: #111; padding: 15px; border-radius: 15px; border: 1px solid #bf00ff; margin-bottom: 12px; }
+        .btn-qty { width: 40px; height: 40px; border-radius: 50%; border: none; color: white; font-weight: bold; font-size: 20px; }
+        .btn-send { width: 100%; padding: 18px; background: #bf00ff; border: none; border-radius: 12px; font-weight: bold; font-size: 20px; color: white; margin-top: 15px; box-shadow: 0 0 10px #bf00ff; }
     </style>
 </head>
 <body>
     <div class="header">
         <span class="crown">👑</span>
         <div class="logo-circle"><div class="logo-text">Kawardha<br>Cafe</div></div>
-        <h1 style="color:#bf00ff; font-size: 40px;">VVIP MENU</h1>
+        <h1 style="color:#bf00ff; font-size: 24px; margin: 5px 0;">VVIP MENU</h1>
     </div>
 
     <input type="text" class="input-box" id="name" placeholder="अपना नाम लिखें">
@@ -30,33 +29,35 @@
     <input type="text" class="input-box" id="mob" placeholder="मोबाइल नंबर">
 
     <div id="itemsContainer"></div>
-    <h2 id="totalDisplay" style="text-align:center; color:#bf00ff; font-size: 35px;">कुल: ₹0</h2>
+    <h2 id="totalDisplay" style="text-align:center; color:#bf00ff; font-size: 22px;">कुल: ₹0</h2>
     <button class="btn-send" onclick="sendOrder()">ऑर्डर कन्फर्म करें 🔥</button>
 
     <script>
         const menu = [
             { name: "Cheese Pizza", pS: 150, pL: 250, qtyS: 0, qtyL: 0 },
-            { name: "Veg Burger", pS: 60, pL: 100, qtyS: 0, qtyL: 0 }
+            { name: "Veg Burger", pS: 60, pL: 100, qtyS: 0, qtyL: 0 },
+            { name: "Cold Coffee", pS: 80, pL: 120, qtyS: 0, qtyL: 0 },
+            { name: "French Fries", pS: 50, pL: 90, qtyS: 0, qtyL: 0 }
         ];
 
         const container = document.getElementById('itemsContainer');
         menu.forEach((item, i) => {
             container.innerHTML += `
             <div class="card">
-                <b>${item.name}</b>
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:15px;">
-                    <div style="font-size:20px;">छोटा (₹${item.pS})</div>
-                    <div style="display:flex; gap:15px;">
+                <b style="font-size:18px;">${item.name}</b>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
+                    <div style="font-size:15px;">छोटा (₹${item.pS})</div>
+                    <div style="display:flex; gap:8px;">
                         <button class="btn-qty" style="background:#007bff;" onclick="upd(${i},'S',-1)">-</button>
-                        <span id="s${i}" style="width:40px; text-align:center; font-size:25px;">0</span>
+                        <span id="s${i}" style="width:25px; text-align:center;">0</span>
                         <button class="btn-qty" style="background:#007bff;" onclick="upd(${i},'S',1)">+</button>
                     </div>
                 </div>
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:15px;">
-                    <div style="font-size:20px;">बड़ा (₹${item.pL})</div>
-                    <div style="display:flex; gap:15px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
+                    <div style="font-size:15px;">बड़ा (₹${item.pL})</div>
+                    <div style="display:flex; gap:8px;">
                         <button class="btn-qty" style="background:#ff4500;" onclick="upd(${i},'L',-1)">-</button>
-                        <span id="l${i}" style="width:40px; text-align:center; font-size:25px;">0</span>
+                        <span id="l${i}" style="width:25px; text-align:center;">0</span>
                         <button class="btn-qty" style="background:#ff4500;" onclick="upd(${i},'L',1)">+</button>
                     </div>
                 </div>
