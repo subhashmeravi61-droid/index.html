@@ -1,39 +1,30 @@
-<!DOCTYPE html>
+DOCTYPE html>
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Kawardha Cafe | VVIP</title>
     <style>
-        * { box-sizing: border-box; touch-action: manipulation; }
-        body { background: #000; color: #fff; font-family: sans-serif; padding: 15px; margin: 0; }
-        
+        * { box-sizing: border-box; }
+        body { background: #000; color: #fff; font-family: sans-serif; padding: 20px; margin: 0; }
+        input { font-size: 16px !important; }
         .header { text-align: center; margin-bottom: 20px; }
-        .crown { font-size: 50px; display: block; margin-bottom: 5px; }
-        
-        /* Glowing Logo */
-        .logo-circle { width: 140px; height: 140px; border: 3px solid #bf00ff; border-radius: 50%; margin: 10px auto; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 20px #bf00ff; }
-        .logo-text { color: #bf00ff; font-size: 20px; font-weight: bold; text-align: center; line-height: 1.1; }
-        
-        .input-box { width: 100%; padding: 12px; margin: 8px 0; border: 2px solid #bf00ff; background: #111; color: #fff; border-radius: 12px; font-size: 16px; }
-        
-        /* Item Cards */
-        .card { background: #111; padding: 15px; border-radius: 15px; border: 1px solid #bf00ff; margin-bottom: 15px; display: flex; align-items: center; }
-        .item-img { width: 80px; height: 80px; border-radius: 10px; border: 2px solid #bf00ff; margin-right: 15px; object-fit: cover; }
-        
-        /* Glowing Buttons */
-        .btn-qty { width: 40px; height: 40px; border-radius: 50%; border: none; color: white; font-weight: bold; font-size: 20px; }
-        .blue-glow { background: #007bff; box-shadow: 0 0 10px #007bff; }
-        .red-glow { background: #ff4500; box-shadow: 0 0 10px #ff4500; }
-        
-        .btn-send { width: 100%; padding: 18px; background: #bf00ff; border: none; border-radius: 12px; font-weight: bold; font-size: 20px; color: white; margin-top: 15px; box-shadow: 0 0 15px #bf00ff; }
+        .crown { font-size: 50px; display: block; margin-bottom: 10px; }
+        .logo-circle { width: 150px; height: 150px; border: 4px solid #bf00ff; border-radius: 50%; margin: 10px auto; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 20px #bf00ff; }
+        .logo-text { color: #bf00ff; font-size: 24px; font-weight: bold; text-align: center; }
+        .input-box { width: 100%; padding: 15px; margin: 10px 0; border: 2px solid #bf00ff; background: #111; color: #fff; border-radius: 10px; font-size: 16px; }
+        .card { background: #111; padding: 15px; border-radius: 15px; border: 1px solid #bf00ff; margin-bottom: 15px; }
+        .btn-qty { width: 45px; height: 45px; border-radius: 50%; border: none; color: white; font-weight: bold; font-size: 20px; }
+        .blue-btn { background: #007bff; }
+        .red-btn { background: #ff4500; }
+        .btn-send { width: 100%; padding: 20px; background: #bf00ff; border: none; border-radius: 15px; font-weight: bold; font-size: 20px; color: white; margin-top: 20px; }
     </style>
 </head>
 <body>
     <div class="header">
         <span class="crown">👑</span>
         <div class="logo-circle"><div class="logo-text">Kawardha<br>Cafe</div></div>
-        <h1 style="color:#bf00ff; font-size: 26px; margin: 10px 0;">VVIP MENU</h1>
+        <h1 style="color:#bf00ff; font-size: 30px;">VVIP MENU</h1>
     </div>
 
     <input type="text" class="input-box" id="name" placeholder="अपना नाम लिखें">
@@ -41,44 +32,41 @@
     <input type="text" class="input-box" id="mob" placeholder="मोबाइल नंबर">
 
     <div id="itemsContainer"></div>
-    <h2 id="totalDisplay" style="text-align:center; color:#bf00ff; font-size: 22px;">कुल: ₹0</h2>
+    <h2 id="totalDisplay" style="text-align:center; color:#bf00ff;">कुल: ₹0</h2>
     <button class="btn-send" onclick="sendOrder()">ऑर्डर कन्फर्म करें 🔥</button>
 
     <script>
         const menu = [
-            { name: "Cheese Pizza", pS: 150, pL: 250, qtyS: 0, qtyL: 0, img: "pizza.jpg" },
-            { name: "Veg Burger", pS: 60, pL: 100, qtyS: 0, qtyL: 0, img: "burger.jpg" }
+            { name: "Cheese Pizza", pS: 150, pL: 250, qtyS: 0, qtyL: 0 },
+            { name: "Veg Burger", pS: 60, pL: 100, qtyS: 0, qtyL: 0 }
         ];
 
         const container = document.getElementById('itemsContainer');
         menu.forEach((item, i) => {
             container.innerHTML += `
             <div class="card">
-                <img src="${item.img}" class="item-img" onerror="this.src='https://via.placeholder.com/80'">
-                <div style="flex:1;">
-                    <b style="font-size:16px; color:#bf00ff;">${item.name}</b>
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:5px;">
-                        <span style="font-size:13px;">छोटा (₹${item.pS})</span>
-                        <div style="display:flex; gap:10px;">
-                            <button class="btn-qty blue-glow" onclick="upd(${i},'S',-1)">-</button>
-                            <span id="s${i}" style="width:20px; text-align:center;">0</span>
-                            <button class="btn-qty blue-glow" onclick="upd(${i},'S',1)">+</button>
-                        </div>
+                <b>${item.name}</b>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
+                    <div>छोटा (₹${item.pS})</div>
+                    <div style="display:flex; gap:10px;">
+                        <button class="btn-qty blue-btn" onclick="upd(${i},'S',-1)">-</button>
+                        <span id="s${i}" style="width:20px; text-align:center;">0</span>
+                        <button class="btn-qty blue-btn" onclick="upd(${i},'S',1)">+</button>
                     </div>
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:5px;">
-                        <span style="font-size:13px;">बड़ा (₹${item.pL})</span>
-                        <div style="display:flex; gap:10px;">
-                            <button class="btn-qty red-glow" onclick="upd(${i},'L',-1)">-</button>
-                            <span id="l${i}" style="width:20px; text-align:center;">0</span>
-                            <button class="btn-qty red-glow" onclick="upd(${i},'L',1)">+</button>
-                        </div>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
+                    <div>बड़ा (₹${item.pL})</div>
+                    <div style="display:flex; gap:10px;">
+                        <button class="btn-qty red-btn" onclick="upd(${i},'L',-1)">-</button>
+                        <span id="l${i}" style="width:20px; text-align:center;">0</span>
+                        <button class="btn-qty red-btn" onclick="upd(${i},'L',1)">+</button>
                     </div>
                 </div>
             </div>`;
         });
 
-        function upd(i, t, v) {
-            if(t=='S') { menu[i].qtyS = Math.max(0, menu[i].qtyS + v); document.getElementById('s'+i).innerText = menu[i].qtyS; }
+        function upd(i, type, v) {
+            if(type=='S') { menu[i].qtyS = Math.max(0, menu[i].qtyS + v); document.getElementById('s'+i).innerText = menu[i].qtyS; }
             else { menu[i].qtyL = Math.max(0, menu[i].qtyL + v); document.getElementById('l'+i).innerText = menu[i].qtyL; }
             calc();
         }
@@ -92,7 +80,8 @@
             let n = document.getElementById('name').value;
             let m = document.getElementById('mob').value;
             if(!n || !m) { alert("कृपया नाम और मोबाइल नंबर भरें!"); return; }
-            let msg = `*ORDER REQUEST*\nName: ${n}\nMob: ${m}\n\n`;
+            
+            let msg = `*ORDER*\nName: ${n}\nMob: ${m}\n\n`;
             menu.forEach(item => { 
                 if(item.qtyS > 0) msg += `${item.name} (S): ${item.qtyS}\n`; 
                 if(item.qtyL > 0) msg += `${item.name} (L): ${item.qtyL}\n`; 
