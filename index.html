@@ -6,35 +6,35 @@
     <title>Kawardha Cafe | VVIP</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Lobster&family=Poppins:wght@600&display=swap');
-        body { background: #000; color: #fff; font-family: 'Poppins', sans-serif; padding: 15px; margin: 0; }
+        /* body mein padding kam kar di hai taaki border poori dikhe */
+        body { background: #000; color: #fff; font-family: 'Poppins', sans-serif; padding: 10px; margin: 0; }
         
-        .logo-box { text-align: center; margin-bottom: 20px; }
-        .crown { font-size: 50px; display: block; filter: drop-shadow(0 0 8px #bf00ff); }
+        .logo-box { text-align: center; margin-bottom: 15px; }
+        .crown { font-size: 40px; display: block; filter: drop-shadow(0 0 8px #bf00ff); }
         .logo-circle { 
-            width: 140px; height: 140px; border: 3px solid #bf00ff; border-radius: 50%; 
+            width: 120px; height: 120px; border: 3px solid #bf00ff; border-radius: 50%; 
             margin: 5px auto; display: flex; align-items: center; justify-content: center;
             box-shadow: 0 0 20px #bf00ff;
         }
-        .logo-text { font-family: 'Lobster', cursive; color: #bf00ff; font-size: 24px; text-shadow: 0 0 10px #bf00ff; }
-        .vvip-title { font-size: 32px; color: #bf00ff; text-shadow: 0 0 12px #bf00ff; margin: 10px 0; }
+        .logo-text { font-family: 'Lobster', cursive; color: #bf00ff; font-size: 20px; text-shadow: 0 0 10px #bf00ff; }
+        .vvip-title { font-size: 28px; color: #bf00ff; text-shadow: 0 0 12px #bf00ff; margin: 10px 0; }
 
-        /* Pili (Yellow) Border permanent set kar di hai */
+        /* Input box margin aur width thodi adjust ki hai */
         .input-box { 
-            width: 100%; padding: 15px; margin: 8px 0; border-radius: 12px; 
-            border: 2px solid #ffcc00; 
+            width: 95%; margin: 5px auto; padding: 12px; border-radius: 12px; 
+            border: 2px solid #ffcc00; display: block;
             background: #111; color: #fff; font-size: 15px; 
-            box-shadow: 0 0 8px #ffcc00; 
-            box-sizing: border-box;
+            box-shadow: 0 0 8px #ffcc00; box-sizing: border-box;
         }
         
-        .card { background: #111; padding: 15px; border-radius: 20px; border: 1.5px solid #bf00ff; margin-bottom: 18px; display: flex; align-items: center; gap: 15px; box-shadow: 0 0 8px #bf00ff; }
-        .item-img { width: 90px; height: 90px; border-radius: 15px; border: 2px solid #bf00ff; object-fit: cover; }
+        .card { background: #111; padding: 12px; border-radius: 20px; border: 1.5px solid #bf00ff; margin: 0 auto 15px auto; width: 95%; display: flex; align-items: center; gap: 10px; box-shadow: 0 0 8px #bf00ff; box-sizing: border-box; }
+        .item-img { width: 80px; height: 80px; border-radius: 15px; border: 2px solid #bf00ff; object-fit: cover; }
         
-        .btn-qty { width: 42px; height: 42px; border-radius: 50%; border: none; color: white; font-weight: bold; font-size: 20px; }
+        .btn-qty { width: 38px; height: 38px; border-radius: 50%; border: none; color: white; font-weight: bold; font-size: 18px; }
         .blue-btn { background: #007bff; box-shadow: 0 0 10px #007bff; }
         .red-btn { background: #ff4500; box-shadow: 0 0 10px #ff4500; }
         
-        .btn-send { width: 100%; padding: 18px; background: #bf00ff; border: none; border-radius: 15px; font-weight: 900; font-size: 22px; color: white; margin-top: 15px; box-shadow: 0 0 15px #bf00ff; }
+        .btn-send { width: 95%; margin: 10px auto; padding: 15px; background: #bf00ff; border: none; border-radius: 15px; font-weight: 900; font-size: 20px; color: white; display: block; box-shadow: 0 0 15px #bf00ff; }
     </style>
 </head>
 <body>
@@ -50,7 +50,7 @@
     <input type="text" class="input-box" id="mob" placeholder="मोबाइल नंबर">
 
     <div id="itemsContainer"></div>
-    <h2 id="totalDisplay" style="text-align:center; color:#bf00ff; font-size: 28px; margin: 15px 0;">कुल: ₹0</h2>
+    <h2 id="totalDisplay" style="text-align:center; color:#bf00ff; font-size: 24px; margin: 10px 0;">कुल: ₹0</h2>
     <button class="btn-send" onclick="sendOrder()">ऑर्डर कन्फर्म करें 🔥</button>
 
     <script>
@@ -68,20 +68,20 @@
             <div class="card">
                 <img src="${item.img}" class="item-img">
                 <div style="flex-grow:1;">
-                    <h3 style="margin:0 0 8px 0; color:#bf00ff; font-size: 18px;">${item.name}</h3>
+                    <h3 style="margin:0 0 5px 0; color:#bf00ff; font-size: 16px;">${item.name}</h3>
                     <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:5px;">
-                        <span style="color:#007bff; font-size:14px; font-weight:bold;">छोटा (₹${item.pS})</span>
-                        <div style="display:flex; gap:10px; align-items:center;">
+                        <span style="color:#007bff; font-size:12px; font-weight:bold;">छोटा (₹${item.pS})</span>
+                        <div style="display:flex; gap:8px; align-items:center;">
                             <button class="btn-qty blue-btn" onclick="upd(${i},'S',-1)">-</button>
-                            <span id="s${i}" style="color:#007bff; font-size:20px; font-weight:bold;">0</span>
+                            <span id="s${i}" style="color:#007bff; font-size:18px; font-weight:bold;">0</span>
                             <button class="btn-qty blue-btn" onclick="upd(${i},'S',1)">+</button>
                         </div>
                     </div>
                     <div style="display:flex; align-items:center; justify-content:space-between;">
-                        <span style="color:#ff4500; font-size:14px; font-weight:bold;">बड़ा (₹${item.pL})</span>
-                        <div style="display:flex; gap:10px; align-items:center;">
+                        <span style="color:#ff4500; font-size:12px; font-weight:bold;">बड़ा (₹${item.pL})</span>
+                        <div style="display:flex; gap:8px; align-items:center;">
                             <button class="btn-qty red-btn" onclick="upd(${i},'L',-1)">-</button>
-                            <span id="l${i}" style="color:#ff4500; font-size:20px; font-weight:bold;">0</span>
+                            <span id="l${i}" style="color:#ff4500; font-size:18px; font-weight:bold;">0</span>
                             <button class="btn-qty red-btn" onclick="upd(${i},'L',1)">+</button>
                         </div>
                     </div>
