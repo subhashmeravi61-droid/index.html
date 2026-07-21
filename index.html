@@ -46,7 +46,6 @@
     <input type="text" class="input-box" id="name" placeholder="अपना नाम लिखें">
     <input type="text" class="input-box" id="addr" placeholder="अपना पता लिखें">
     <input type="text" class="input-box" id="mob" placeholder="मोबाइल नंबर">
-    <!-- Paid amount daalne ke liye option (Udhaar/Kist calculate karne ke liye) -->
     <input type="number" class="input-box" id="paid" placeholder="जितना पैसा जमा किया (Paid Amount)">
 
     <div id="itemsContainer"></div>
@@ -131,7 +130,7 @@
 
             msg += "\n" + document.getElementById('totalDisplay').innerText;
 
-            // --- Google Sheet Data Sending Code (New Updated Script URL) ---
+            // --- Google Sheet Data Sending Code ---
             let scriptURL = "https://script.google.com/macros/s/AKfycbz-sYzWhTQaHS46CLWiQOp9-r-1-GGmLYZP065Wq5gnRw63HxytHYt2z563qu7zxnwH5w/exec";
             
             let orderData = {
@@ -139,15 +138,16 @@
                 phoneNumber: m,
                 itemDetails: itemsOrdered.join(', '),
                 totalAmount: totalAmount,
-                paidAmount: paidInput > 0 ? paidInput : totalAmount // Agar paid amount na bhare toh default pura paid maan lega, ya jitna bharega utna kist/partial judega
+                paidAmount: paidInput > 0 ? paidInput : totalAmount
             };
 
             fetch(scriptURL, {
                 method: 'POST',
                 body: JSON.stringify(orderData)
-            }).then(res => res.json())
-              .then(data => console.log('Data sent & Khata updated successfully', data))
-              .catch(error => console.error('Error!', error.message));
+            })
+            .then(res => res.json())
+            .then(data => console.log('Success:', data))
+            .catch(error => console.error('Error!', error));
 
             // --- WhatsApp Redirect ---
             window.open("https://wa.me/916264917767?text=" + encodeURIComponent(msg), '_blank');
