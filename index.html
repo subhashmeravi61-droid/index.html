@@ -46,6 +46,8 @@
     <input type="text" class="input-box" id="name" placeholder="अपना नाम लिखें">
     <input type="text" class="input-box" id="addr" placeholder="अपना पता लिखें">
     <input type="text" class="input-box" id="mob" placeholder="मोबाइल नंबर">
+    <!-- Paid amount daalne ke liye option (Udhaar/Kist calculate karne ke liye) -->
+    <input type="number" class="input-box" id="paid" placeholder="जितना पैसा जमा किया (Paid Amount)">
 
     <div id="itemsContainer"></div>
     <h2 id="totalDisplay" style="text-align:center; color:#bf00ff; font-size: 24px; margin: 10px 0;">कुल: ₹0</h2>
@@ -103,6 +105,7 @@
             let n = document.getElementById('name').value;
             let a = document.getElementById('addr').value; 
             let m = document.getElementById('mob').value;
+            let paidInput = parseFloat(document.getElementById('paid').value) || 0;
             
             if(!n || !m || !a) { alert("कृपया नाम, पता और मोबाइल नंबर भरें!"); return; }
             
@@ -128,26 +131,23 @@
 
             msg += "\n" + document.getElementById('totalDisplay').innerText;
 
-            // --- Google Sheet Data Sending Code (Updated Link) ---
-            let scriptURL = "https://script.google.com/macros/s/AKfycbybXrmaI5ur2hqsdW-Vp-4AoIQJrzxc0EjHbUeDrTKi5mj-AvOKc_H7QOIghteXGJM0HA/exec";
+            // --- Google Sheet Data Sending Code (New Updated Script URL) ---
+            let scriptURL = "https://script.google.com/macros/s/AKfycbz-sYzWhTQaHS46CLWiQOp9-r-1-GGmLYZP065Wq5gnRw63HxytHYt2z563qu7zxnwH5w/exec";
             
             let orderData = {
                 customerName: n + " (पता: " + a + ")",
-                phone: m,
-                itemName: itemsOrdered.join(', '),
-                quantity: "Multiple",
-                price: "-",
-                total: totalAmount
+                phoneNumber: m,
+                itemDetails: itemsOrdered.join(', '),
+                totalAmount: totalAmount,
+                paidAmount: paidInput > 0 ? paidInput : totalAmount // Agar paid amount na bhare toh default pura paid maan lega, ya jitna bharega utna kist/partial judega
             };
 
             fetch(scriptURL, {
                 method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(orderData)
-            }).then(() => {
-                console.log('Data sent to sheet');
-            }).catch(error => console.error('Error!', error.message));
+            }).then(res => res.json())
+              .then(data => console.log('Data sent & Khata updated successfully', data))
+              .catch(error => console.error('Error!', error.message));
 
             // --- WhatsApp Redirect ---
             window.open("https://wa.me/916264917767?text=" + encodeURIComponent(msg), '_blank');
