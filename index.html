@@ -96,22 +96,60 @@
         function calc() {
             let t = 0; menu.forEach(item => t += (item.qtyS * item.pS) + (item.qtyL * item.pL));
             document.getElementById('totalDisplay').innerText = "कुल: ₹" + t;
+            return t;
         }
 
         function sendOrder() {
             let n = document.getElementById('name').value;
-            let a = document.getElementById('addr').value; // Address yahan fix ho gaya
+            let a = document.getElementById('addr').value; 
             let m = document.getElementById('mob').value;
             
             if(!n || !m || !a) { alert("कृपया नाम, पता और मोबाइल नंबर भरें!"); return; }
             
-            let msg = `*KAWARDHA CAFE VVIP ORDER*\nनाम: ${n}\nपता: ${a}\nमोबाइल: ${m}\n\n`; // Yahan message mein address add ho gaya
+            let totalAmount = calc();
+            let itemsOrdered = [];
+            let msg = `*KAWARDHA CAFE VVIP ORDER*\nनाम: ${n}\nपता: ${a}\nमोबाइल: ${m}\n\n`; 
             
             menu.forEach(item => {
-                if(item.qtyS > 0) msg += `• ${item.name} (छोटा): ${item.qtyS}\n`;
-                if(item.qtyL > 0) msg += `• ${item.name} (बड़ा): ${item.qtyL}\n`;
+                if(item.qtyS > 0) {
+                    msg += `• ${item.name} (छोटा): ${item.qtyS}\n`;
+                    itemsOrdered.push(`${item.name} (S: ${item.qtyS})`);
+                }
+                if(item.qtyL > 0) {
+                    msg += `• ${item.name} (बड़ा): ${item.qtyL}\n`;
+                    itemsOrdered.push(`${item.name} (L: ${item.qtyL})`);
+                }
             });
+
+            if(itemsOrdered.length === 0) {
+                alert("कृपया कम से कम एक आइटम चुनें!");
+                return;
+            }
+
             msg += "\n" + document.getElementById('totalDisplay').innerText;
+
+            // --- Google Sheet Data Sending Code ---
+            let scriptURL = "https://script.google.com/macros/s/AKfycbxgdOdYMFl0F34d9686WmQQ9xFax3rzB9ncbe_4jhpgfWix-P_Bd9QY1mzrInUVTJtjqg/exec";
+            
+            let orderData = {
+                customerName: n + " (पता: " + a + ")",
+                phone: m,
+                itemName: itemsOrdered.join(', '),
+                quantity: "Multiple",
+                price: "-",
+                total: totalAmount
+            };
+
+            fetch(scriptURL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(orderData)
+            }).then(() => {
+                console.log('Data sent to sheet');
+            }).catch(error => console.error('Error!', error.message));
+
+            // --- WhatsApp Redirect ---
             window.open("https://wa.me/916264917767?text=" + encodeURIComponent(msg), '_blank');
         }
     </script>
