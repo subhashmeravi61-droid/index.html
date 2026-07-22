@@ -25,12 +25,12 @@
             box-shadow: 0 0 8px #ffcc00; box-sizing: border-box;
         }
         
-        /* Jo dabba lock rahega uska style thoda alag dikhega taaki pata chale */
-        .locked-box { 
+        /* Yeh wahi dabba hai jo pehle jaisa dikhega par andar se automatic 0 rahega */
+        .smart-paid-box { 
             width: 95%; margin: 5px auto; padding: 12px; border-radius: 12px; 
             border: 2px solid #555; display: block;
-            background: #1a1a1a; color: #888; font-size: 15px; 
-            box-sizing: border-box; text-align: center; font-weight: bold;
+            background: #1a1a1a; color: #aaa; font-size: 15px; 
+            box-sizing: border-box; text-align: center;
         }
         
         .card { background: #111; padding: 12px; border-radius: 20px; border: 1.5px solid #bf00ff; margin: 0 auto 15px auto; width: 95%; display: flex; align-items: center; gap: 10px; box-shadow: 0 0 8px #bf00ff; box-sizing: border-box; }
@@ -55,8 +55,8 @@
     <input type="text" class="input-box" id="addr" placeholder="अपना पता लिखें">
     <input type="text" class="input-box" id="mob" placeholder="मोबाइल नंबर">
     
-    <!-- Yeh raha locked dabba jisme pehle se 0 hai aur koi change nahi kar sakta -->
-    <input type="text" class="locked-box" id="paid" value="Paid Amount: ₹0 (Udhaar)" disabled>
+    <!-- Yeh wahi purane look wala dabba hai, par isko lock kar diya hai taaki automatic 0 jaye -->
+    <input type="text" class="smart-paid-box" id="paid" value="Paid Amount: ₹0 (Automatic)" disabled>
 
     <div id="itemsContainer"></div>
     <h2 id="totalDisplay" style="text-align:center; color:#bf00ff; font-size: 24px; margin: 10px 0;">कुल: ₹0</h2>
@@ -139,7 +139,7 @@
 
             msg += "\n" + document.getElementById('totalDisplay').innerText;
 
-            // --- Google Sheet Data Sending Code (Paid amount is hardcoded to 0) ---
+            // --- Google Sheet Data Sending Code (Paid amount is strictly 0 for Ledger) ---
             let scriptURL = "https://script.google.com/macros/s/AKfycbz-sYzWhTQaHS46CLWiQOp9-r-1-GGmLYZP065Wq5gnRw63HxytHYt2z563qu7zxnwH5w/exec";
             
             let orderData = {
