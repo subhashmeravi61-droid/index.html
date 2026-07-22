@@ -46,7 +46,6 @@
     <input type="text" class="input-box" id="name" placeholder="अपना नाम लिखें">
     <input type="text" class="input-box" id="addr" placeholder="अपना पता लिखें">
     <input type="text" class="input-box" id="mob" placeholder="मोबाइल नंबर">
-    <input type="number" class="input-box" id="paid" placeholder="जितना पैसा जमा किया (Paid Amount)">
 
     <div id="itemsContainer"></div>
     <h2 id="totalDisplay" style="text-align:center; color:#bf00ff; font-size: 24px; margin: 10px 0;">कुल: ₹0</h2>
@@ -104,7 +103,6 @@
             let n = document.getElementById('name').value;
             let a = document.getElementById('addr').value; 
             let m = document.getElementById('mob').value;
-            let paidInput = parseFloat(document.getElementById('paid').value) || 0;
             
             if(!n || !m || !a) { alert("कृपया नाम, पता और मोबाइल नंबर भरें!"); return; }
             
@@ -130,7 +128,7 @@
 
             msg += "\n" + document.getElementById('totalDisplay').innerText;
 
-            // --- Google Sheet Data Sending Code ---
+            // --- Google Sheet Data Sending Code (Paid Amount is now fixed to 0) ---
             let scriptURL = "https://script.google.com/macros/s/AKfycbz-sYzWhTQaHS46CLWiQOp9-r-1-GGmLYZP065Wq5gnRw63HxytHYt2z563qu7zxnwH5w/exec";
             
             let orderData = {
@@ -138,7 +136,7 @@
                 phoneNumber: m,
                 itemDetails: itemsOrdered.join(', '),
                 totalAmount: totalAmount,
-                paidAmount: paidInput > 0 ? paidInput : totalAmount
+                paidAmount: 0 
             };
 
             fetch(scriptURL, {
